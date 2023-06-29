@@ -18,7 +18,7 @@ router.post('/register',registerRules,validationResult, register);
 
 router.post('/login', login);
 
-router.get('/logout', logout);
+router.get('/logout', authorize, logout);
 
 router.get('/me', authorize, getMe);
 
