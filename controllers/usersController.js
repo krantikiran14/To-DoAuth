@@ -9,36 +9,38 @@ export const register = async (req, res) => {
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({ message: "User already exists" });
     }
 
-    const salt = await genSalt(10);
-    const hashedPassword = await hash(password, salt);
+    const hashedPassword = await hash(password, 10);
 
     const user = new User({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
     });
 
     await user.save();
 
-    const payload = {
-      user: user._id
-    };
+    const token = sign(
+      { user: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "360000" }
+    );
 
-    const token = sign(payload, process.env.JWT_SECRET, { expiresIn: '360000' });
-
-    res.cookie('token', token, { httpOnly: true, expiresIn: '360000' });
+    res.cookie("token", token, { httpOnly: true, expiresIn: "360000" });
 
     const { password: pass, ...rest } = user._doc;
 
-    res.status(201).json({ msg: 'User Created Successfully', user: rest });
+    res
+      .status(201)
+      .json({ msg: "User Created Successfully", user: rest });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 export const login = async (req, res) => {
   try {
