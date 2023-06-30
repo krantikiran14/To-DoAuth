@@ -158,13 +158,14 @@ export const deleteUser = async (req, res) => {
       return res.status(404).json({ message: 'User does not exist' });
     }
 
-    await user.remove();
+    await User.deleteOne({ _id: userId });
     res.status(200).json({ message: 'User Deleted' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 export default {
   register,
