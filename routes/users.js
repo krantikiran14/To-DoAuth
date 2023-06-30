@@ -26,6 +26,6 @@ router.put('/updateDetails', authorize, updateDetailsRules, validationResult, up
 
 router.put('/updatePassword', authorize,updatePasswordRules, validationResult, updatePassword);
 
-router.delete('/delete', authorize, deleteUser);
+router.delete('/deleteUser', authorize, deleteUser);
 
 export default router;
