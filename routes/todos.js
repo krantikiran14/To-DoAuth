@@ -20,7 +20,7 @@ import validationResult from "../middleware/validationResults.js";
 const router = express.Router();
 
 router.get("/:id", authorize, getToDo);
-router.get("/", getToDos);
+router.get("/", authorize, getToDos);
 router.post("/create", authorize, createToDoRules, validationResult, createToDo);
 router.put("/update/:id", authorize, updateTodoRules, validationResult, updateToDo);
 router.delete("/delete/:id", authorize, deleteToDo);
