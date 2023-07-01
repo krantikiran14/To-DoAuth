@@ -55,6 +55,7 @@ export const createToDo = async (req, res) => {
 
 export const deleteToDo = async (req, res) => {
   const { id } = req.params;
+  console.log (req.user)
 
   try {
     const todo = await Todo.findById(id);
