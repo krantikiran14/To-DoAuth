@@ -23,6 +23,6 @@ router.get("/:id", authorize, getToDo);
 router.get("/", authorize, getToDos);
 router.post("/create", authorize, createToDoRules, validationResult, createToDo);
 router.put("/update/:id", authorize, updateTodoRules, validationResult, updateToDo);
-router.delete("/delete/:id", authorize, deleteToDo);
+router.delete("/delete/:id", deleteToDo);
 
 export default router;
