@@ -55,7 +55,6 @@ export const createToDo = async (req, res) => {
 
 export const deleteToDo = async (req, res) => {
   const { id } = req.params;
-  const { id: userId } = req.user;
 
   try {
     const todo = await Todo.findById(id);
@@ -64,7 +63,7 @@ export const deleteToDo = async (req, res) => {
       return res.status(404).json({ msg: 'Todo Not Found' });
     }
 
-    if (todo.user.toString() !== userId) {
+    if (todo.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'Not Authorized' });
     }
 
@@ -73,7 +72,7 @@ export const deleteToDo = async (req, res) => {
     res.status(200).json({ msg: 'Todo Deleted' });
   } catch (error) {
     console.error(error.message);
-    res.status(500).json({ errors: 'Internal Server Error' });
+    res.status(500).send({ errors: 'Internal Server Error' });
   }
 };
 
