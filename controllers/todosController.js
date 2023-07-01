@@ -20,7 +20,7 @@ export const getToDo = async (req, res) => {
       return res.status(404).json({ msg: 'Todo Not Found' });
     }
 
-    if (todo.user.toString() !== req.user.id) {
+    if (!req.user || todo.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'Not Authorized' });
     }
 
@@ -30,6 +30,7 @@ export const getToDo = async (req, res) => {
     res.status(500).send({ errors: 'Internal Server Error' });
   }
 };
+
 
 export const createToDo = async (req, res) => {
   const { title, description } = req.body;
