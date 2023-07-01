@@ -1,12 +1,11 @@
 import Todo from '../models/Todo.js';
-import authorize from '../middleware/authorize.js';
 
 export const getToDos = async (req, res) => {
   try {
     const todos = await Todo.find({ user: req.user });
-    res.status(200).json({ msg: 'ToDo Found' }, todos);
+    res.status(200).json({ msg: 'ToDo Found', todos });
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
     res.status(500).send({ errors: 'Internal server error' });
   }
 };
